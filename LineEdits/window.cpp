@@ -1,63 +1,63 @@
 #include "window.h"
 
 #include <QGroupBox>
-#include "QGridLayout"
-#include "QLabel"
+#include <QGridLayout>
+#include <QLabel>
 #include <QComboBox>
 
 Window::Window(QWidget *parent)
     : QWidget(parent)
 {
-    QGroupBox *echoGroup = new QGroupBox(tr("echo"));
+    QGroupBox *echoGroup = new QGroupBox(tr("Esconder"));
 
-    QLabel *echoLabel = new QLabel(tr("Mode:"));
+    QLabel *echoLabel = new QLabel(tr("Modo:"));
     QComboBox *echoComboBox = new QComboBox;
     echoComboBox->addItem(tr("Normal"));
-    echoComboBox->addItem(tr("Password"));
-    echoComboBox->addItem(tr("passwordEchoEdit"));
-    echoComboBox->addItem(tr("No echo"));
+    echoComboBox->addItem(tr("Nenha"));
+    echoComboBox->addItem(tr("EsconderAposTerminar"));
+    echoComboBox->addItem(tr("Sem esconder"));
 
     echoLineEdit = new QLineEdit;
     echoLineEdit->setPlaceholderText("Placeholder Text");
     echoLineEdit->setFocus();
 
-    QGroupBox *validatorGroup = new QGroupBox(tr("Validator"));
+    QGroupBox *validatorGroup = new QGroupBox(tr("Validação"));
 
-    QLabel *validatorLabel = new QLabel(tr("Type:"));
+    QLabel *validatorLabel = new QLabel(tr("Tipo:"));
     QComboBox *validatorComboBox = new QComboBox;
-    validatorComboBox->addItem(tr("No validator"));
-    validatorComboBox->addItem(tr("Integer validator"));
-    validatorComboBox->addItem(tr("Double validator"));
+    validatorComboBox->addItem(tr("Sem validação"));
+    validatorComboBox->addItem(tr("Valor inteiro"));
+    validatorComboBox->addItem(tr("Valor real"));
 
     validatorLineEdit = new QLineEdit;
     validatorLineEdit->setPlaceholderText("Placeholder Text");
 
 
-    QGroupBox *alignmentGroup = new QGroupBox(tr("Alignment"));
+    QGroupBox *alignmentGroup = new QGroupBox(tr("Alinhamento"));
 
-    QLabel *alignmentLabel = new QLabel(tr("Type:"));
+    QLabel *alignmentLabel = new QLabel(tr("Tipo:"));
     QComboBox *alignmentComboBox = new QComboBox;
-    alignmentComboBox->addItem(tr("left"));
-    alignmentComboBox->addItem(tr("Centered"));
-    alignmentComboBox->addItem(tr("right"));
+    alignmentComboBox->addItem(tr("Esquerda"));
+    alignmentComboBox->addItem(tr("Centralizado"));
+    alignmentComboBox->addItem(tr("Direita"));
 
     alignmentLineEdit = new QLineEdit;
     alignmentLineEdit->setPlaceholderText("Placeholder Text");
 
 
-    QGroupBox *inputMaskGroup = new QGroupBox(tr("Input Mask"));
+    QGroupBox *inputMaskGroup = new QGroupBox(tr("Mascara"));
 
-    QLabel *inputMaskLabel = new QLabel(tr("Type"));
+    QLabel *inputMaskLabel = new QLabel(tr("Tipo:"));
     QComboBox *inputMaskComboBox = new QComboBox;
-    inputMaskComboBox->addItem("No mask");
-    inputMaskComboBox->addItem("Phone Number");
-    inputMaskComboBox->addItem("ISO date");
-    inputMaskComboBox->addItem("License key");
+    inputMaskComboBox->addItem("Sem mascara");
+    inputMaskComboBox->addItem("Numero de celular");
+    inputMaskComboBox->addItem("Data");
+    inputMaskComboBox->addItem("Chave de acesso");
 
     inputMaskLineEdit = new QLineEdit;
     inputMaskLineEdit->setPlaceholderText("Placeholder Text");
 
-    QGroupBox *accessGroup = new QGroupBox(tr("Access"));
+    QGroupBox *accessGroup = new QGroupBox(tr("Acesso"));
 
     QLabel *accessLabel = new QLabel(tr("Read-only"));
     QComboBox *accessComboBox = new QComboBox;
@@ -120,27 +120,97 @@ Window::Window(QWidget *parent)
 
 }
 
-void Window::echoChanged(int value)
+void Window::echoChanged(int index)
 {
+    switch (index) {
+    case 0:
+        echoLineEdit->setEchoMode(QLineEdit::Normal);
+        break;
+    case 1:
+        echoLineEdit->setEchoMode(QLineEdit::Password);
+        break;
+    case 2:
+        echoLineEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+        break;
+    case 3:
+        echoLineEdit->setEchoMode(QLineEdit::NoEcho);
+    default:
+        echoLineEdit->setEchoMode(QLineEdit::Normal);
+        break;
+    }
+}
+
+void Window::validatorChanged(int index)
+{
+    switch (index) {
+    case 0:
+        validatorLineEdit->setValidator(nullptr);
+        break;
+    case 1:
+        validatorLineEdit->setValidator(new QIntValidator(validatorLineEdit));
+        break;
+    case 2:
+        validatorLineEdit->setValidator(new QDoubleValidator(-999.0, 999.0, 2, validatorLineEdit));
+        break;
+    default:
+        validatorLineEdit->setValidator(nullptr);
+        break;
+    }
+    validatorLineEdit->clear();
+}
+
+void Window::alignmentChanged(int index)
+{
+    switch (index) {
+    case 0:
+        alignmentLineEdit->setAlignment(Qt::AlignLeft);
+        break;
+    case 1:
+        alignmentLineEdit->setAlignment(Qt::AlignCenter);
+        break;
+    case 2:
+        alignmentLineEdit->setAlignment(Qt::AlignRight);
+        break;
+    default:
+        alignmentLineEdit->setAlignment(Qt::AlignLeft);
+        break;
+    }
+}
+
+void Window::inputMaskChanged(int index)
+{
+    switch (index) {
+    case 0:
+        inputMaskLineEdit->setInputMask("");
+        break;
+    case 1:
+        inputMaskLineEdit->setInputMask("+99 (99) 99999-9999;_");
+        break;
+    case 2:
+        inputMaskLineEdit->setInputMask("00-00-0000");
+        inputMaskLineEdit->setText("00000000");
+        inputMaskLineEdit->setCursorPosition(0);
+        break;
+    case 3:
+        inputMaskLineEdit->setInputMask(">AAAAA-AAAAA-AAAAA-AAAAA-AAAAA;#");
+        break;
+    default:
+        break;
+    }
 
 }
 
-void Window::validatorChanged(int value)
+void Window::accessChanged(int index)
 {
-
-}
-
-void Window::alignmentChanged(int value)
-{
-
-}
-
-void Window::inputMaskChanged(int value)
-{
-
-}
-
-void Window::accessChanged(int value)
-{
-
+    switch (index) {
+    case 0:
+        accessLineEdit->setReadOnly(false);
+        break;
+    case 1:
+        accessLineEdit->setReadOnly(true);
+        break;
+    default:
+        accessLineEdit->setReadOnly(false);
+        break;
+    }
 }

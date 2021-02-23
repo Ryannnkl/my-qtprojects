@@ -1,16 +1,15 @@
 #ifndef PRINCIPAL_H
 #define PRINCIPAL_H
 
-#include <QMainWindow>
+#include <QWidget>
 #include <QLineEdit>
 
-class Principal : public QMainWindow
+class Principal : public QWidget
 {
     Q_OBJECT
 
 public:
     Principal(QWidget *parent = nullptr);
-    ~Principal();
 private slots:
     void loginClicked();
 
