@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(testes LANGUAGES CXX)
+project(QtQuick LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -24,22 +24,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
 if(ANDROID)
-  add_library(testes SHARED
-    main.cpp
-    principal.cpp
-    principal.h
-  )
+    add_library(QtQuick SHARED
+      main.cpp
+      qml.qrc
+    )
 else()
-  add_executable(testes
-    main.cpp
-    principal.cpp
-    principal.h
-    mydialog.cpp
-    mydialog.h
-  )
+    add_executable(QtQuick
+      main.cpp
+      qml.qrc
+    )
 endif()
 
-target_link_libraries(testes PRIVATE Qt5::Widgets)
+target_compile_definitions(QtQuick
+  PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+target_link_libraries(QtQuick
+  PRIVATE Qt5::Core Qt5::Quick)

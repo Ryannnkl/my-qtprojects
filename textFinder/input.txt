@@ -1,0 +1,1 @@
+ola mundo, testando o QFile do qt5 em um projeto simples de find word do, ola

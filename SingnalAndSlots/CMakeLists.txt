@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(testes LANGUAGES CXX)
+project(SingnalAndSlots LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -27,19 +27,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
-  add_library(testes SHARED
+  add_library(SingnalAndSlots SHARED
     main.cpp
-    principal.cpp
-    principal.h
+    mainwindow.cpp
+    mainwindow.h
   )
 else()
-  add_executable(testes
+  add_executable(SingnalAndSlots
     main.cpp
-    principal.cpp
-    principal.h
-    mydialog.cpp
-    mydialog.h
+    mainwindow.cpp
+    mainwindow.h
   )
 endif()
 
-target_link_libraries(testes PRIVATE Qt5::Widgets)
+target_link_libraries(SingnalAndSlots PRIVATE Qt5::Widgets)
