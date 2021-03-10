@@ -1,0 +1,3 @@
+# my-qtprojects
+
+### for studying
