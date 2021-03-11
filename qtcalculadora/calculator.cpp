@@ -4,6 +4,8 @@
 #include "QGridLayout"
 #include "QFont"
 #include "QtMath"
+#include <QMenu>
+#include <QMessageBox>
 
 Calculator::Calculator(QWidget *parent)
     : QWidget(parent), sumInMemory(0.0), sumSoFar(0.0)
@@ -76,12 +78,19 @@ Calculator::Calculator(QWidget *parent)
     mainLayot->addWidget(reciprocalButton, 4, 5);
     mainLayot->addWidget(equalButton, 5, 5);
 
+    QMenu *menu = new QMenu(this);
+    QAction *ac1 = new QAction;
+    connect(mainLayot, &QWidget::customContextMenuRequested, this, &Calculator::testeContextMenu);
     setLayout(mainLayot);
 
     setWindowTitle("Calculadora");
 }
 
 
+void Calculator::testeContextMenu()
+{
+    QMessageBox::information(this, "teste", "teste de sla");
+}
 
 void Calculator::digitClicked()
 {

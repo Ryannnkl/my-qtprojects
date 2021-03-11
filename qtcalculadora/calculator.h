@@ -28,6 +28,7 @@ public slots:
     void readMemory();
     void setMemory();
     void addToMemory();
+    void testeContextMenu();
 
 private:
     Button *createButton(const QString &text, const char *member);
