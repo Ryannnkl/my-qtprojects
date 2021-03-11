@@ -31,12 +31,16 @@ if(ANDROID)
     main.cpp
     codeeditor.cpp
     codeeditor.h
+    qwriteapplication.cpp
+    qwriteapplication.h
   )
 else()
   add_executable(notepad
     main.cpp
     codeeditor.cpp
     codeeditor.h
+    qwriteapplication.cpp
+    qwriteapplication.h
   )
 endif()
 
